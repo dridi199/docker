@@ -1,0 +1,33 @@
+
+# SPARK Slave
+FROM ubuntu:latest
+
+RUN apt-get update && apt-get install -y \
+    wget \
+    openjdk-17-jre-headless \
+    python3 \
+    scala && apt-get clean && cd /home && mkdir spark && cd spark && \
+    wget https://archive.apache.org/dist/spark/spark-3.5.1/spark-3.5.1-bin-hadoop3.tgz && \
+    tar -xvf spark-3.5.1-bin-hadoop3.tgz
+
+# Setup JAVA_HOME and SPARK_HOME -- useful for docker commandline
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/
+RUN export JAVA_HOME
+ENV SPARK_HOME=/home/spark/spark-3.5.1-bin-hadoop3
+RUN export SPARK_HOME
+
+ENV PATH="$SPARK_HOME/bin:$PATH:$SPARK_HOME/bin/spark-class"
+RUN export PATH
+
+ENV CORES=3
+ENV MEMORY=2G
+
+# Fix certificate issues
+RUN apt-get update && \
+    apt-get install ca-certificates-java && \
+    apt-get clean && \
+    update-ca-certificates -f
+
+
+ENTRYPOINT $SPARK_HOME/bin/spark-class org.apache.spark.deploy.worker.Worker -c $CORES -m $MEMORY $MASTER_PORT_7077_TCP_ADDR:$MASTER_PORT_7077_TCP_PORT
+

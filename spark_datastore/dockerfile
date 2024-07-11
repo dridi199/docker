@@ -1,0 +1,9 @@
+#Spark Datastore
+FROM ubuntu:latest
+
+RUN apt-get update
+
+VOLUME ["/data"]
+
+ENTRYPOINT ["/bin/true"]
+
