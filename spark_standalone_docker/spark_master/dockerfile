@@ -1,0 +1,27 @@
+
+FROM ubuntu:latest
+
+RUN apt-get update && apt-get install -y \
+    wget \
+    openjdk-17-jre-headless \
+    python3 \
+    scala && cd /home && mkdir spark && cd spark && \
+    wget https://archive.apache.org/dist/spark/spark-3.5.1/spark-3.5.1-bin-hadoop3.tgz && \
+    tar -xvf spark-3.5.1-bin-hadoop3.tgz
+
+# Setup JAVA_HOME and SPARK_HOME -- useful for docker commandline
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/
+ENV SPARK_HOME=/home/spark/spark-3.5.1-bin-hadoop3
+ENV PATH="$SPARK_HOME/bin:$PATH"
+
+
+# Fix certificate issues
+RUN apt-get update && \
+    apt-get install ca-certificates-java && \
+    apt-get clean && \
+    update-ca-certificates -f
+
+RUN export PATH
+
+ENTRYPOINT ["/home/spark/spark-3.5.1-bin-hadoop3/bin/spark-class","org.apache.spark.deploy.master.Master"]
+
