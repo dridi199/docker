@@ -33,6 +33,18 @@ docker images
 
 Once you have all the images created it's time to start them up.
 
+### THE EASY WAY
+
+use the script create_spark_standalone.sh to create a full cluster
+```
+Create a spark standalone cluster with two workers:
+
+./create_spark_standalone.sh 2
+
+```
+
+### THE HARD WAY
+
 ##### Create the datastore container
 
 We first create the datastore container so all the other container can use the datastore container's data volume.
