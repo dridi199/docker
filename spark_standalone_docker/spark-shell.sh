@@ -1,0 +1,1 @@
+spark-shell --master spark://spar-master-ip:7077 --conf spark.hadoop.fs.s3a.endpoint=http://machine-container-ip:9000 --conf spark.hadoop.fs.s3a.access.key=access --conf spark.hadoop.fs.s3a.secret.key=secret --conf spark.hadoop.fs.s3a.path.style.access=true --conf spark.hadoop.fs.s3a.impl=org.apache.hadoop.fs.s3a.S3AFileSystem

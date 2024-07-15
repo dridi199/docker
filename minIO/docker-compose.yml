@@ -1,0 +1,26 @@
+services:
+    minio:
+        image: 'minio/minio:latest'
+        ports:
+            - '9000:9000'
+            - '8900:8900'
+        environment:
+            MINIO_ROOT_USER: minio123
+            MINIO_ROOT_PASSWORD: minio123
+        volumes:
+            - 'minio:/data/minio'
+        command: 'minio server /data/minio --console-address ":8900"'
+        healthcheck:
+            test:
+                - CMD
+                - curl
+                - '-f'
+                - 'http://localhost:9000/minio/health/live'
+            retries: 3
+            timeout: 5s
+
+volumes:
+    minio:
+        driver: local
+
+#Il est ensuite possible de démarrer le serveur à l'aide de la commande docker-compose up ce qui aura pour effet de démarrer le serveur S3 sur le port 9000 et la console d'administration sur le port 8900
