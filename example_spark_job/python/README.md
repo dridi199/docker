@@ -1,4 +1,4 @@
-##to run a Python job using spark-submit :
+## to run a Python job using spark-submit :
 
 ``` 
 spark-submit \
@@ -15,9 +15,9 @@ spark-submit \
   --executor-cores 1 \
   MainPython.py 
 ```
-##to run a Python Spark StreamingConsumer :
+## to run a Python Spark StreamingConsumer :
 
-###Need to install kafka using compose for example from this tutoriel:
+### Need to install kafka using compose for example from this tutoriel:
 
 ```
 1- https://medium.com/@amberkakkar01/getting-started-with-apache-kafka-on-docker-a-step-by-step-guide-48e71e241cf2
@@ -25,7 +25,7 @@ spark-submit \
 3- then plugin you MainKafkaStream.py on your borker
 4- enjoy...
 
-###Resume
+### Resume
 * install kafka using compose
 * then use this command to create your topic using this command :
     docker exec -it <kafka-container-id> /opt/kafka/bin/kafka-topics.sh --create --zookeeper zookeeper:2181 --replication-factor 1 --partitions 1 --topic my-topic
